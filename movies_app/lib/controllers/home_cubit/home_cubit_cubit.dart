@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/api_service.dart';
 import 'package:movies_app/core/errors/failure.dart';
 import 'package:movies_app/models/movie/movie.dart';
+import 'package:movies_app/presentation/pages/search_screen.dart';
 import 'package:movies_app/presentation/widgets/main_home.dart';
-import 'package:movies_app/presentation/widgets/search.dart';
 
 part 'home_cubit_state.dart';
 
@@ -28,13 +28,20 @@ class HomeCubit extends Cubit<HomeCubitState> {
     emit(BottomNavBarClicked());
   }
 
-  Future<void> getMovies() async {
+  Future<void> getHomeMovies() async {
     emit(LoadingState());
 
     try {
-      var movies = await _apiService.getMovies();
+      var trendingMovies = await _apiService.getSpecificMovies('all');
+      var recommendedMovies = await _apiService.getSpecificMovies('action');
+      var comedyMovies = await _apiService.getSpecificMovies('comedy');
 
-      emit(GetMoviesSuccessState(movies: movies));
+      List<List<MovieModel>> moviesLists = [
+        trendingMovies,
+        recommendedMovies,
+        comedyMovies
+      ];
+      emit(GetMoviesSuccessState(moviesLists: moviesLists));
     } catch (e) {
       if (e is DioException) {
         emit(GetMoviesErrorState(

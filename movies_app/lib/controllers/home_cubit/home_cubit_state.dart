@@ -10,9 +10,9 @@ class BottomNavBarClicked extends HomeCubitState {}
 class LoadingState extends HomeCubitState {}
 
 class GetMoviesSuccessState extends HomeCubitState {
-  final List<MovieModel> movies;
+  final List<List<MovieModel>> moviesLists;
 
-  GetMoviesSuccessState({required this.movies});
+  GetMoviesSuccessState({required this.moviesLists});
 }
 
 class GetMoviesErrorState extends HomeCubitState {

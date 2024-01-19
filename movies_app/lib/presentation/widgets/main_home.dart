@@ -9,12 +9,12 @@ class MainHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeCubit = context.read<HomeCubit>();
-    homeCubit.getMovies(); // Call the function directly
+    homeCubit.getHomeMovies(); // Call the function directly
 
     return BlocBuilder<HomeCubit, HomeCubitState>(
       builder: (context, state) {
         if (state is GetMoviesErrorState) {
-          WidgetsBinding.instance?.addPostFrameCallback((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.errorMsg)));
             print(state.errorMsg);
@@ -29,21 +29,21 @@ class MainHome extends StatelessWidget {
             children: [
               ListViewWithTitle(
                 title: 'Trending',
-                movies: state.movies,
+                movies: state.moviesLists[0],
               ),
               const SizedBox(
                 height: 20,
               ),
               ListViewWithTitle(
                 title: 'Recommended for you',
-                movies: state.movies,
+                movies: state.moviesLists[1],
               ),
               const SizedBox(
                 height: 20,
               ),
               ListViewWithTitle(
                 title: 'Comedy Movies',
-                movies: state.movies,
+                movies: state.moviesLists[2],
               ),
               const SizedBox(
                 height: 10,

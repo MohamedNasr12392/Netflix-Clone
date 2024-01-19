@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+class SearchScreenBody extends StatelessWidget {
+  const SearchScreenBody({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:movies_app/models/movie/movie.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String BASE_URL = "https://api.tvmaze.com/search/shows?q=all";
+  static const String BASE_URL = "https://api.tvmaze.com/search/shows?q=comedy";
   Future<List<MovieModel>> getMovies() async {
     List<MovieModel> movies = [];
     var response = await http.get(Uri.parse(BASE_URL));
@@ -20,7 +20,7 @@ class ApiService {
     return movies;
   }
 
-  Future<List<MovieModel>> getFilteredMovies(String query) async {
+  Future<List<MovieModel>> getSpecificMovies(String query) async {
     List<MovieModel> movies = [];
     var response = await http
         .get(Uri.parse('https://api.tvmaze.com/search/shows?q=$query'));

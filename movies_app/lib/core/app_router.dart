@@ -1,7 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:movies_app/core/constants/strings.dart';
+import 'package:movies_app/models/movie/movie.dart';
 import 'package:movies_app/presentation/pages/home_screen.dart';
 import 'package:movies_app/presentation/pages/movie_details.dart';
+import 'package:movies_app/presentation/pages/search_screen.dart';
 import 'package:movies_app/presentation/pages/splash_screen.dart';
 
 abstract class AppRouter {
@@ -19,7 +21,13 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: Strings.kMovieDetailsScreen,
-        builder: (context, state) => const MovieDetailsScreen(),
+        builder: (context, state) => MovieDetailsScreen(
+          movie: state.extra as MovieModel,
+        ),
+      ),
+      GoRoute(
+        path: Strings.kSearchScreen,
+        builder: (context, state) => const SearchScreen(),
       ),
     ],
   );
