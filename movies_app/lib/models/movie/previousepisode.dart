@@ -1,20 +1,23 @@
-import 'package:equatable/equatable.dart';
+import 'dart:convert';
 
-class Previousepisode extends Equatable {
+class Previousepisode {
   final String? href;
 
-  const Previousepisode({this.href});
+  Previousepisode({
+    this.href,
+  });
 
-  factory Previousepisode.fromJson(Map<String, dynamic> json) {
-    return Previousepisode(
-      href: json['href'] as String?,
-    );
-  }
+  factory Previousepisode.fromRawJson(String str) =>
+      Previousepisode.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Previousepisode.fromJson(Map<String, dynamic> json) =>
+      Previousepisode(
+        href: json["href"],
+      );
 
   Map<String, dynamic> toJson() => {
-        'href': href,
+        "href": href,
       };
-
-  @override
-  List<Object?> get props => [href];
 }

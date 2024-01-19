@@ -1,31 +1,38 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 import 'country.dart';
 
-class Network extends Equatable {
+class Network {
   final int? id;
   final String? name;
   final Country? country;
-  final dynamic officialSite;
+  final String? officialSite;
 
-  const Network({this.id, this.name, this.country, this.officialSite});
+  Network({
+    this.id,
+    this.name,
+    this.country,
+    this.officialSite,
+  });
+
+  factory Network.fromRawJson(String str) => Network.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
 
   factory Network.fromJson(Map<String, dynamic> json) => Network(
-        id: json['id'] as int?,
-        name: json['name'] as String?,
-        country: json['country'] == null
-            ? null
-            : Country.fromJson(json['country'] as Map<String, dynamic>),
-        officialSite: json['officialSite'] as dynamic,
+        id: json["id"],
+        name: json["name"],
+        country:
+            json["country"] == null ? null : Country.fromJson(json["country"]),
+        officialSite: json["officialSite"],
       );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'country': country?.toJson(),
-        'officialSite': officialSite,
+        "id": id,
+        "name": name,
+        "country": country?.toJson(),
+        "officialSite": officialSite,
       };
-
-  @override
-  List<Object?> get props => [id, name, country, officialSite];
 }

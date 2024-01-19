@@ -1,13 +1,12 @@
-import 'package:equatable/equatable.dart';
+import 'dart:convert';
+import 'package:movies_app/models/movie/externals.dart';
+import 'package:movies_app/models/movie/image.dart';
+import 'package:movies_app/models/movie/links.dart';
+import 'package:movies_app/models/movie/network.dart';
+import 'package:movies_app/models/movie/rating.dart';
+import 'package:movies_app/models/movie/schedule.dart';
 
-import 'externals.dart';
-import 'image.dart';
-import 'links.dart';
-import 'network.dart';
-import 'rating.dart';
-import 'schedule.dart';
-
-class Show extends Equatable {
+class Show {
   final int? id;
   final String? url;
   final String? name;
@@ -17,8 +16,8 @@ class Show extends Equatable {
   final String? status;
   final int? runtime;
   final int? averageRuntime;
-  final String? premiered;
-  final String? ended;
+  final DateTime? premiered;
+  final DateTime? ended;
   final String? officialSite;
   final Schedule? schedule;
   final Rating? rating;
@@ -32,7 +31,7 @@ class Show extends Equatable {
   final int? updated;
   final Links? links;
 
-  const Show({
+  Show({
     this.id,
     this.url,
     this.name,
@@ -58,96 +57,71 @@ class Show extends Equatable {
     this.links,
   });
 
+  factory Show.fromRawJson(String str) => Show.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
   factory Show.fromJson(Map<String, dynamic> json) => Show(
-        id: json['id'] as int?,
-        url: json['url'] as String?,
-        name: json['name'] as String?,
-        type: json['type'] as String?,
-        language: json['language'] as String?,
-        genres: json['genres'] as List<String>?,
-        status: json['status'] as String?,
-        runtime: json['runtime'] as int?,
-        averageRuntime: json['averageRuntime'] as int?,
-        premiered: json['premiered'] as String?,
-        ended: json['ended'] as String?,
-        officialSite: json['officialSite'] as String?,
-        schedule: json['schedule'] == null
+        id: json["id"],
+        url: json["url"],
+        name: json["name"],
+        type: json["type"],
+        language: json["language"],
+        genres: json["genres"] == null
+            ? []
+            : List<String>.from(json["genres"]!.map((x) => x)),
+        status: json["status"],
+        runtime: json["runtime"],
+        averageRuntime: json["averageRuntime"],
+        premiered: json["premiered"] == null
             ? null
-            : Schedule.fromJson(json['schedule'] as Map<String, dynamic>),
-        rating: json['rating'] == null
+            : DateTime.parse(json["premiered"]),
+        ended: json["ended"] == null ? null : DateTime.parse(json["ended"]),
+        officialSite: json["officialSite"],
+        schedule: json["schedule"] == null
             ? null
-            : Rating.fromJson(json['rating'] as Map<String, dynamic>),
-        weight: json['weight'] as int?,
-        network: json['network'] == null
+            : Schedule.fromJson(json["schedule"]),
+        rating: json["rating"] == null ? null : Rating.fromJson(json["rating"]),
+        weight: json["weight"],
+        network:
+            json["network"] == null ? null : Network.fromJson(json["network"]),
+        webChannel: json["webChannel"],
+        dvdCountry: json["dvdCountry"],
+        externals: json["externals"] == null
             ? null
-            : Network.fromJson(json['network'] as Map<String, dynamic>),
-        webChannel: json['webChannel'] as dynamic,
-        dvdCountry: json['dvdCountry'] as dynamic,
-        externals: json['externals'] == null
-            ? null
-            : Externals.fromJson(json['externals'] as Map<String, dynamic>),
-        image: json['image'] == null
-            ? null
-            : Image.fromJson(json['image'] as Map<String, dynamic>),
-        summary: json['summary'] as String?,
-        updated: json['updated'] as int?,
-        links: json['_links'] == null
-            ? null
-            : Links.fromJson(json['_links'] as Map<String, dynamic>),
+            : Externals.fromJson(json["externals"]),
+        image: json["image"] == null ? null : Image.fromJson(json["image"]),
+        summary: json["summary"],
+        updated: json["updated"],
+        links: json["_links"] == null ? null : Links.fromJson(json["_links"]),
       );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'url': url,
-        'name': name,
-        'type': type,
-        'language': language,
-        'genres': genres,
-        'status': status,
-        'runtime': runtime,
-        'averageRuntime': averageRuntime,
-        'premiered': premiered,
-        'ended': ended,
-        'officialSite': officialSite,
-        'schedule': schedule?.toJson(),
-        'rating': rating?.toJson(),
-        'weight': weight,
-        'network': network?.toJson(),
-        'webChannel': webChannel,
-        'dvdCountry': dvdCountry,
-        'externals': externals?.toJson(),
-        'image': image?.toJson(),
-        'summary': summary,
-        'updated': updated,
-        '_links': links?.toJson(),
+        "id": id,
+        "url": url,
+        "name": name,
+        "type": type,
+        "language": language,
+        "genres":
+            genres == null ? [] : List<dynamic>.from(genres!.map((x) => x)),
+        "status": status,
+        "runtime": runtime,
+        "averageRuntime": averageRuntime,
+        "premiered":
+            "${premiered!.year.toString().padLeft(4, '0')}-${premiered!.month.toString().padLeft(2, '0')}-${premiered!.day.toString().padLeft(2, '0')}",
+        "ended":
+            "${ended!.year.toString().padLeft(4, '0')}-${ended!.month.toString().padLeft(2, '0')}-${ended!.day.toString().padLeft(2, '0')}",
+        "officialSite": officialSite,
+        "schedule": schedule?.toJson(),
+        "rating": rating?.toJson(),
+        "weight": weight,
+        "network": network?.toJson(),
+        "webChannel": webChannel,
+        "dvdCountry": dvdCountry,
+        "externals": externals?.toJson(),
+        "image": image?.toJson(),
+        "summary": summary,
+        "updated": updated,
+        "_links": links?.toJson(),
       };
-
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      url,
-      name,
-      type,
-      language,
-      genres,
-      status,
-      runtime,
-      averageRuntime,
-      premiered,
-      ended,
-      officialSite,
-      schedule,
-      rating,
-      weight,
-      network,
-      webChannel,
-      dvdCountry,
-      externals,
-      image,
-      summary,
-      updated,
-      links,
-    ];
-  }
 }

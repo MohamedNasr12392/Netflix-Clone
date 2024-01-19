@@ -1,29 +1,31 @@
-import 'package:equatable/equatable.dart';
+import 'dart:convert';
+import 'package:movies_app/models/movie/movie.dart';
+import 'package:movies_app/models/movie/previousepisode.dart';
 
-import 'previousepisode.dart';
-import 'self.dart';
-
-class Links extends Equatable {
-  final Self? self;
+class Links {
+  final Previousepisode? self;
   final Previousepisode? previousepisode;
 
-  const Links({this.self, this.previousepisode});
+  Links({
+    this.self,
+    this.previousepisode,
+  });
+
+  factory Links.fromRawJson(String str) => Links.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
 
   factory Links.fromJson(Map<String, dynamic> json) => Links(
-        self: json['self'] == null
+        self: json["self"] == null
             ? null
-            : Self.fromJson(json['self'] as Map<String, dynamic>),
-        previousepisode: json['previousepisode'] == null
+            : Previousepisode.fromJson(json["self"]),
+        previousepisode: json["previousepisode"] == null
             ? null
-            : Previousepisode.fromJson(
-                json['previousepisode'] as Map<String, dynamic>),
+            : Previousepisode.fromJson(json["previousepisode"]),
       );
 
   Map<String, dynamic> toJson() => {
-        'self': self?.toJson(),
-        'previousepisode': previousepisode?.toJson(),
+        "self": self?.toJson(),
+        "previousepisode": previousepisode?.toJson(),
       };
-
-  @override
-  List<Object?> get props => [self, previousepisode];
 }

@@ -1,21 +1,25 @@
-import 'package:equatable/equatable.dart';
+import 'dart:convert';
 
-class Image extends Equatable {
+class Image {
   final String? medium;
   final String? original;
 
-  const Image({this.medium, this.original});
+  Image({
+    this.medium,
+    this.original,
+  });
+
+  factory Image.fromRawJson(String str) => Image.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(
-        medium: json['medium'] as String?,
-        original: json['original'] as String?,
+        medium: json["medium"],
+        original: json["original"],
       );
 
   Map<String, dynamic> toJson() => {
-        'medium': medium,
-        'original': original,
+        "medium": medium,
+        "original": original,
       };
-
-  @override
-  List<Object?> get props => [medium, original];
 }

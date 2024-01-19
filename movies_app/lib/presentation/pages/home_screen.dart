@@ -20,6 +20,10 @@ class HomeScreen extends StatelessWidget {
             backgroundColor: Colors.black,
             appBar: const CustomAppBar(),
             body: BlocBuilder<HomeCubit, HomeCubitState>(
+              buildWhen: (previous, current) {
+                return current is BottomNavBarClicked ||
+                    current is HomeCubitInitial;
+              },
               builder: (context, state) {
                 if (state is BottomNavBarClicked || state is HomeCubitInitial) {
                   return HomeScreenBody(
@@ -33,10 +37,7 @@ class HomeScreen extends StatelessWidget {
             ),
             bottomNavigationBar: BlocBuilder<HomeCubit, HomeCubitState>(
               builder: (context, state) {
-                if (state is BottomNavBarClicked || state is HomeCubitInitial) {
-                  return HomeNavBar(homeContext: context);
-                }
-                return const SizedBox();
+                return HomeNavBar(homeContext: context);
               },
             ),
           ),

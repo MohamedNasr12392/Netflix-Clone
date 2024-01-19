@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/models/movie/movie.dart';
 import 'package:movies_app/presentation/widgets/list_view_item.dart';
 
 class ListViewWithTitle extends StatelessWidget {
-  const ListViewWithTitle({super.key, required this.title});
+  const ListViewWithTitle({
+    super.key,
+    required this.title,
+    required this.movies,
+  });
 
   final String title;
+  final List<MovieModel> movies;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,8 +33,10 @@ class ListViewWithTitle extends StatelessWidget {
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            itemCount: 6,
-            itemBuilder: (context, index) => const ListViewItem(),
+            itemCount: movies.length,
+            itemBuilder: (context, index) => ListViewItem(
+              movie: movies[index],
+            ),
           ),
         )
       ],

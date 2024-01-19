@@ -38,7 +38,7 @@ class HomeNavBar extends StatelessWidget {
             color: Colors.grey,
           ),
           activeIcon: Icon(
-            Icons.home,
+            Icons.search,
             size: 16,
             color: Colors.red,
           ),
@@ -51,7 +51,7 @@ class HomeNavBar extends StatelessWidget {
             color: Colors.grey,
           ),
           activeIcon: Icon(
-            Icons.home,
+            Icons.download,
             size: 16,
             color: Colors.red,
           ),
