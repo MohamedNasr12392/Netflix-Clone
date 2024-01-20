@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/models/movie/movie.dart';
-import 'package:movies_app/presentation/widgets/custom_mocie_image.dart';
+import 'package:movies_app/presentation/widgets/custom_movie_image.dart';
 
 class MovieDetailsBody extends StatelessWidget {
   const MovieDetailsBody({

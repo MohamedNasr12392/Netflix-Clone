@@ -16,31 +16,21 @@ class HomeScreen extends StatelessWidget {
         animationDuration: const Duration(seconds: 1),
         child: BlocProvider(
           create: (context) => HomeCubit(),
-          child: Scaffold(
-            backgroundColor: Colors.black,
-            appBar: const CustomAppBar(),
-            body: BlocBuilder<HomeCubit, HomeCubitState>(
-              buildWhen: (previous, current) {
-                return current is BottomNavBarClicked ||
-                    current is HomeCubitInitial;
-              },
-              builder: (context, state) {
-                if (state is BottomNavBarClicked || state is HomeCubitInitial) {
-                  return HomeScreenBody(
-                    body: context
-                        .read<HomeCubit>()
-                        .body[context.read<HomeCubit>().currentIndex],
-                  );
-                }
-                return const SizedBox();
-              },
-            ),
-            bottomNavigationBar: BlocBuilder<HomeCubit, HomeCubitState>(
-              builder: (context, state) {
-                return HomeNavBar(homeContext: context);
-              },
-            ),
-          ),
+          child:
+              BlocBuilder<HomeCubit, HomeCubitState>(builder: (context, state) {
+            return Scaffold(
+              backgroundColor: Colors.black,
+              appBar: context.watch<HomeCubit>().currentIndex != 1
+                  ? const CustomAppBar()
+                  : null,
+              body: HomeScreenBody(
+                body: context
+                    .read<HomeCubit>()
+                    .body[context.read<HomeCubit>().currentIndex],
+              ),
+              bottomNavigationBar: HomeNavBar(homeContext: context),
+            );
+          }),
         ),
       ),
     );

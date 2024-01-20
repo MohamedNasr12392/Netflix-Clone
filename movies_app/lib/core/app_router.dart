@@ -1,4 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movies_app/controllers/home_cubit/home_cubit_cubit.dart';
 import 'package:movies_app/core/constants/strings.dart';
 import 'package:movies_app/models/movie/movie.dart';
 import 'package:movies_app/presentation/pages/home_screen.dart';

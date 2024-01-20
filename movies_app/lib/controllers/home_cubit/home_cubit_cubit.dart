@@ -25,7 +25,7 @@ class HomeCubit extends Cubit<HomeCubitState> {
 
   void tapNavBar(int newIndex) {
     currentIndex = newIndex;
-    emit(BottomNavBarClicked());
+    emit(BottomNavBarClicked(index: newIndex));
   }
 
   Future<void> getHomeMovies() async {
@@ -48,6 +48,24 @@ class HomeCubit extends Cubit<HomeCubitState> {
             errorMsg: ServerFailure.fromDioError(e).errorMessage));
       }
       emit(GetMoviesErrorState(
+          errorMsg: ServerFailure(e.toString()).errorMessage));
+    }
+  }
+
+  Future<void> searchForMovies(String movieName) async {
+    emit(LoadingState());
+
+    try {
+      var searchedMovies = await _apiService.getSpecificMovies(movieName);
+
+      List<MovieModel> moviesList = searchedMovies;
+      emit(SearchMoviesSuccessState(moviesList: moviesList));
+    } catch (e) {
+      if (e is DioException) {
+        emit(SearchMoviesErrorState(
+            errorMsg: ServerFailure.fromDioError(e).errorMessage));
+      }
+      emit(SearchMoviesErrorState(
           errorMsg: ServerFailure(e.toString()).errorMessage));
     }
   }
