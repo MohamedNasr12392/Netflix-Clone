@@ -22,11 +22,18 @@ abstract class AppRouter {
         builder: (context, state) => const HomeScreen(),
       ),
       GoRoute(
-        path: Strings.kMovieDetailsScreen,
-        builder: (context, state) => MovieDetailsScreen(
-          movie: state.extra as MovieModel,
-        ),
-      ),
+          path: Strings.kMovieDetailsScreen,
+          builder: (context, state) {
+            final List<dynamic> extras = state.extra as List<dynamic>;
+            final MovieModel movie = extras[0] as MovieModel;
+            final List<MovieModel> moreMoviesLikeThat =
+                extras[1] as List<MovieModel>;
+
+            return MovieDetailsScreen(
+              movie: movie,
+              moreMoviesLikeThat: moreMoviesLikeThat,
+            );
+          }),
       GoRoute(
         path: Strings.kSearchScreen,
         builder: (context, state) => const SearchScreen(),

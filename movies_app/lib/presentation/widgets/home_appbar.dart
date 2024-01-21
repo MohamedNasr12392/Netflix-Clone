@@ -24,11 +24,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         height: 30,
       ),
       centerTitle: true,
-      bottom: const TabBar(
+      bottom: TabBar(
         isScrollable: true,
         indicatorColor: Colors.red,
         dividerColor: Colors.transparent,
-        tabs: [
+        onTap: (value) {
+          print(value);
+          print('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz');
+        },
+        tabs: const [
           Text(
             'TV Shows',
             style: TextStyle(

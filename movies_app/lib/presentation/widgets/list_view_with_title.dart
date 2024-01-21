@@ -35,6 +35,7 @@ class ListViewWithTitle extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: movies.length,
             itemBuilder: (context, index) => ListViewItem(
+              moreMoviesLikeThat: movies,
               movie: movies[index],
             ),
           ),

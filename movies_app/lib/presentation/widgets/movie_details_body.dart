@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/models/movie/movie.dart';
 import 'package:movies_app/presentation/widgets/custom_movie_image.dart';
-import 'package:read_more_text/read_more_text.dart';
+import 'package:movies_app/presentation/widgets/list_view_with_title.dart';
 
 class MovieDetailsBody extends StatelessWidget {
-  const MovieDetailsBody({
-    Key? key,
-    required this.movie,
-  }) : super(key: key);
+  const MovieDetailsBody(
+      {Key? key, required this.movie, required this.moreMoviesLikeThat})
+      : super(key: key);
 
   final MovieModel movie;
+  final List<MovieModel> moreMoviesLikeThat;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
         body: ListView(children: [
-          Column(children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Stack(
               children: [
                 Hero(
@@ -106,28 +106,33 @@ class MovieDetailsBody extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Column(
-                children: [
-                  Text(
-                    movie.show?.name?.toUpperCase() ?? 'No Available Name',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Column(
+                  children: [
+                    Text(
+                      movie.show?.name?.toUpperCase() ?? 'No Available Name',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    movie.show!.genres!.join(' • '),
-                    style: const TextStyle(
-                      color: Colors.white54,
-                      fontSize: 16,
+                    Text(
+                      movie.show!.genres!.join(' • '),
+                      style: const TextStyle(
+                        color: Colors.white54,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+            ),
+            const SizedBox(
+              height: 10,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10.0),
@@ -135,10 +140,25 @@ class MovieDetailsBody extends StatelessWidget {
                 movie.show!.summary!,
                 style: const TextStyle(
                   fontSize: 14,
-                  color: Colors.white,
+                  color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              'More Movies Like That',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            ListViewWithTitle(
+              title: '',
+              movies: moreMoviesLikeThat,
             ),
           ]),
         ]));

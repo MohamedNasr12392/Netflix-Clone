@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/api_service.dart';
 import 'package:movies_app/core/errors/failure.dart';
 import 'package:movies_app/models/movie/movie.dart';
+import 'package:movies_app/presentation/pages/downloads_screen.dart';
 import 'package:movies_app/presentation/pages/search_screen.dart';
 import 'package:movies_app/presentation/widgets/main_home.dart';
 
@@ -19,7 +20,7 @@ class HomeCubit extends Cubit<HomeCubitState> {
   List<Widget> body = [
     const MainHome(),
     const SearchScreen(),
-    Container(),
+    const DownloadsScreen(),
     Container(),
   ];
 

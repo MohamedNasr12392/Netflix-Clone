@@ -6,17 +6,18 @@ import 'package:movies_app/core/constants/strings.dart';
 import 'package:movies_app/models/movie/movie.dart';
 
 class ListViewItem extends StatelessWidget {
-  const ListViewItem({
-    Key? key,
-    required this.movie,
-  }) : super(key: key);
+  const ListViewItem(
+      {Key? key, required this.movie, required this.moreMoviesLikeThat})
+      : super(key: key);
 
   final MovieModel movie;
+  final List<MovieModel> moreMoviesLikeThat;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          GoRouter.of(context).push(Strings.kMovieDetailsScreen, extra: movie),
+      onTap: () => GoRouter.of(context).push(Strings.kMovieDetailsScreen,
+          extra: [movie, moreMoviesLikeThat]),
       child: Hero(
         tag: movie.show!.id.toString(),
         child: Padding(
