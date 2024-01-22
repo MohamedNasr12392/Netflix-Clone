@@ -8,21 +8,25 @@ class SearchListViewItem extends StatelessWidget {
   const SearchListViewItem({
     super.key,
     required this.movie,
+    required this.moreMoviesLikeThat,
   });
+
+  final List<MovieModel> moreMoviesLikeThat;
+  final MovieModel movie;
 
   int calcRate(num rating) {
     return (rating / 2).round();
   }
 
-  final MovieModel movie;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(Strings.kMovieDetailsScreen, extra: movie);
+        GoRouter.of(context).push(Strings.kMovieDetailsScreen,
+            extra: [movie, moreMoviesLikeThat]);
       },
       child: Hero(
-        tag: movie.show!.id.toString(),
+        tag: '${movie.show?.id ?? movie.show?.name ?? ''}search',
         child: Container(
           padding: const EdgeInsets.only(top: 5),
           color: Colors.transparent,

@@ -18,6 +18,7 @@ class SearchListView extends StatelessWidget {
             margin: const EdgeInsets.only(right: 5, bottom: 10),
             child: SearchListViewItem(
               movie: movies[index],
+              moreMoviesLikeThat: movies,
             ),
           );
         },
